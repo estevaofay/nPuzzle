@@ -3,7 +3,7 @@ package algorithms;
 import entity.Node;
 import helpers.NodeComparator;
 import helpers.PuzzleScrambler;
-import helpers.SolvabilityChecker;
+import helpers.SolubilityChecker;
 import states.Puzzle;
 
 import java.util.Collections;
@@ -76,6 +76,6 @@ public class AStarAlgorithm implements Algorithm {
     }
 
     private boolean nodeIsNotSolvable(final Node node) {
-        return SolvabilityChecker.isSolvable(node.getState());
+        return SolubilityChecker.isSolvable(node.getState());
     }
 }
