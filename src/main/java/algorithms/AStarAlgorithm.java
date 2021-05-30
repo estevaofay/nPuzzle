@@ -3,6 +3,7 @@ package algorithms;
 import entity.Node;
 import helpers.NodeComparator;
 import helpers.PuzzleScrambler;
+import states.Puzzle;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,8 +16,10 @@ public class AStarAlgorithm implements Algorithm {
     private HashSet<Node> closed;
     private final Node startNode;
     private final NodeComparator nc = new NodeComparator();
+    private static final Node NO_PARENT = null;
 
-    public AStarAlgorithm(Node startNode) {
+    public AStarAlgorithm(final Puzzle puzzle) {
+        final Node startNode = new Node(NO_PARENT, puzzle);
         this.startNode = startNode;
     }
 
@@ -29,7 +32,7 @@ public class AStarAlgorithm implements Algorithm {
         return false;
     }
 
-    public Node search() {
+    public Node solve() {
         fringe = new LinkedList<>();
         closed = new HashSet<>();
 
@@ -44,7 +47,6 @@ public class AStarAlgorithm implements Algorithm {
             Node auxNode = fringe.remove(0);
 
             if (auxNode.isGoal()) {
-                System.out.println(auxNode.printTree());
                 return auxNode;
             }
 
@@ -68,9 +70,7 @@ public class AStarAlgorithm implements Algorithm {
 
                 }
             }
-
         }
-
         return null;
     }
 }

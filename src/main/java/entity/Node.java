@@ -3,7 +3,6 @@ package entity;
 import states.Puzzle;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 public class Node {
@@ -11,22 +10,26 @@ public class Node {
     private final Puzzle state;
     private Node parent;
     private Integer depth; //g()
-    private Set<Node> possibleMoves;
-    private Integer f;
 
-
-    public Node(Node parent, Puzzle state){
+    public Node(final Node parent, final Puzzle state){
         this.state = state;
         this.parent = parent;
-        if(parent != null) {
-            this.depth = parent.depth + 1;
-        } else {
-            this.depth = 0;
-        }
-
+        this.depth = getNodeDepth(parent);
     }
 
-    public int f() {
+    private Integer getNodeDepth(final Node parent) {
+        if(parentIsRootNode(parent)) {
+            return 0;
+        } else {
+            return parent.depth + 1;
+        }
+    }
+
+    private boolean parentIsRootNode(final Node parent) {
+        return parent == null;
+    }
+
+    public int getNodeQuality() {
         return depth + state.h();
     }
 
@@ -50,30 +53,10 @@ public class Node {
         aux.addAll(this.getState().getPossibleMoves());
 
         for (Puzzle puzzle : aux) {
-            ret.add(puzzle.getNode());
+            ret.add(new Node(this, puzzle));
         }
         return ret;
     }
-
-    public String printTree() {
-        StringBuilder sb = new StringBuilder();
-        LinkedList<Node> printList = new LinkedList<>();
-        Node aux = this;
-        while (aux.getParent() !=null){
-            printList.addFirst(aux);
-            if(aux.getParent()!=null){
-                aux = aux.getParent();
-            }
-
-        }
-        for (Node node : printList) {
-            sb.append(node.toString());
-            sb.append("\n");
-        }
-
-        return sb.toString();
-    }
-
 
     public boolean isGoal(){
         return this.state.isGoal();

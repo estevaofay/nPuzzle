@@ -1,5 +1,7 @@
 package algorithms;
 
-public interface Algorithm {
+import entity.Node;
 
+public interface Algorithm {
+    public Node solve();
 }

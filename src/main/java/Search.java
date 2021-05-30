@@ -1,14 +1,17 @@
 import algorithms.AStarAlgorithm;
 import entity.Node;
+import helpers.PuzzleScrambler;
+import helpers.SolutionNodeTree;
 import states.Puzzle;
 
 public class Search {
 
     public static void main(String[] args) {
 
-        Puzzle startPuzzle = new Puzzle(3);
-        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startPuzzle.getNode());
-        Node solved = aStarAlgorithm.search();
-
+        final Puzzle puzzle = new Puzzle(3);
+        PuzzleScrambler.scramblePuzzle(puzzle);
+        final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(puzzle);
+        final Node solution = aStarAlgorithm.solve();
+        SolutionNodeTree.printSolutionTree(solution);
     }
 }

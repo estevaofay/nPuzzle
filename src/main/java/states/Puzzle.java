@@ -1,6 +1,5 @@
 package states;
 
-import entity.Node;
 import helpers.PuzzleScrambler;
 
 import java.util.HashSet;
@@ -17,34 +16,27 @@ public class Puzzle {
     int[][] matrix;
 
     LinkedList<Puzzle> possibleMoves;
-    private Node node = new Node(null, this);
 
     public int randomIndex() {
         return ((int) (Math.random() * puzzleDimension));
     }
 
-    public Node getNode() {
-        return this.node;
+    public Puzzle(int puzzleDimension) {
+        matrix = new int[puzzleDimension][puzzleDimension];
+        this.puzzleDimension = puzzleDimension;
+        createDefaultPuzzle();
+        PuzzleScrambler.scramblePuzzle(this);
+
     }
 
-    public Puzzle(int puzzleDimension) { //criar estado aleatório
-        matrix = new int[puzzleDimension][puzzleDimension];
+    private void createDefaultPuzzle() {
         int filler = 0;
-
-        //FILL MATRIX IN ORDER
-        this.puzzleDimension = puzzleDimension;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-
                 matrix[i][j] = filler + 1;
                 filler++;
             }
         }
-        //SCRAMBLE MATRIX POINTS
-//        scramblePuzzle();
-
-        PuzzleScrambler.scramblePuzzle(this);
-
     }
 
     //CONSTRUCTOR THAT COPIES A MATRIX SO IT CAN CHANGE LATER
