@@ -32,48 +32,39 @@ public class PuzzleScrambler {
         }
     }
 
+    private static void moveOriginalPuzzle(final Puzzle originalPuzzle, final Puzzle movedPuzzle) {
+        for (int j = 0; j < originalPuzzle.getMatrix().length; j++) {
+            for (int k = 0; k < originalPuzzle.getMatrix().length; k++) {
+                originalPuzzle.getMatrix()[j][k] = movedPuzzle.getMatrix()[j][k];
+            }
+        }
+    }
+
     private static void tryToMovePuzzleLeft(final Puzzle puzzle) {
         if(puzzleCanMoveLeft(puzzle)) {
             Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.LEFT);
-            for (int j = 0; j < puzzle.getMatrix().length; j++) {
-                for (int k = 0; k < puzzle.getMatrix().length; k++) {
-                    puzzle.getMatrix()[j][k] = movedPuzzle.getMatrix()[j][k];
-                }
-            }
+            moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static void tryToMovePuzzleRight(final Puzzle puzzle) {
         if(puzzleCanMoveRight(puzzle)) {
             Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.RIGHT);
-            for (int j = 0; j < puzzle.getMatrix().length; j++) {
-                for (int k = 0; k < puzzle.getMatrix().length; k++) {
-                    puzzle.getMatrix()[j][k] = puzzle.getMatrix()[j][k];
-                }
-            }
+            moveOriginalPuzzle(puzzle, puzzle);
         }
     }
 
     private static void tryToMovePuzzleDown(final Puzzle puzzle) {
         if(puzzleCanMoveDown(puzzle)){
             Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.DOWN);
-            for (int j = 0; j < puzzle.getMatrix().length; j++) {
-                for (int k = 0; k < puzzle.getMatrix().length; k++) {
-                    puzzle.getMatrix()[j][k] = movedPuzzle.getMatrix()[j][k];
-                }
-
-            }
+            moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static void tryToMovePuzzleUp(final Puzzle puzzle) {
         if(puzzleCanMoveUp(puzzle)) {
             Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.UP);
-            for (int j = 0; j < puzzle.getMatrix().length; j++) {
-                for (int k = 0; k < puzzle.getMatrix().length; k++) {
-                    puzzle.getMatrix()[j][k] = movedPuzzle.getMatrix()[j][k];
-                }
-            }
+            moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 

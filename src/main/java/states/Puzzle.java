@@ -39,7 +39,7 @@ public class Puzzle {
         }
     }
 
-    public Puzzle move(Direction d) {
+    public Puzzle move(final Direction d) {
         Puzzle movedPuzzle = new Puzzle(this);
 
         switch (d) {
