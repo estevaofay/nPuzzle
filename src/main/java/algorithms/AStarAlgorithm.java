@@ -2,6 +2,8 @@ package algorithms;
 
 import entity.Node;
 import helpers.NodeComparator;
+import helpers.PuzzleScrambler;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -34,7 +36,7 @@ public class AStarAlgorithm implements Algorithm {
         fringe.add(startNode);
 
         while (!startNode.getState().isSolvable()) {
-            startNode.getState().Scramble();
+            PuzzleScrambler.scramblePuzzle(startNode.getState());
         }
 
         while (!fringe.isEmpty()) {
