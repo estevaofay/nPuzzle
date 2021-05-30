@@ -3,6 +3,7 @@ package algorithms;
 import entity.Node;
 import helpers.NodeComparator;
 import helpers.PuzzleScrambler;
+import helpers.SolvabilityChecker;
 import states.Puzzle;
 
 import java.util.Collections;
@@ -38,7 +39,7 @@ public class AStarAlgorithm implements Algorithm {
 
         fringe.add(startNode);
 
-        while (!startNode.getState().isSolvable()) {
+        while (nodeIsNotSolvable(startNode)) {
             PuzzleScrambler.scramblePuzzle(startNode.getState());
         }
 
@@ -51,7 +52,7 @@ public class AStarAlgorithm implements Algorithm {
             }
 
             Set<Node> possibleMoves = new HashSet<>();
-            possibleMoves.addAll(auxNode.expand());
+            possibleMoves.addAll(auxNode.getValidChildNodes());
 
             closed.add(auxNode);
             //System.out.println("CLOSED: " + closed.size());
@@ -72,5 +73,9 @@ public class AStarAlgorithm implements Algorithm {
             }
         }
         return null;
+    }
+
+    private boolean nodeIsNotSolvable(final Node node) {
+        return SolvabilityChecker.isSolvable(node.getState());
     }
 }

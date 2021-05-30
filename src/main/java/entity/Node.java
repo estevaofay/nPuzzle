@@ -17,8 +17,8 @@ public class Node {
         this.depth = getNodeDepth(parent);
     }
 
-    private Integer getNodeDepth(final Node parent) {
-        if(parentIsRootNode(parent)) {
+    private int getNodeDepth(final Node parent) {
+        if (parentIsRootNode(parent)) {
             return 0;
         } else {
             return parent.depth + 1;
@@ -30,32 +30,19 @@ public class Node {
     }
 
     public int getNodeQuality() {
-        return depth + state.h();
+        return depth + state.getStateHeuristic();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        Node node = (Node) o;
-        for (int i = 0; i < state.getMatrix().length; i++) {
-            for (int j = 0; j < state.getMatrix().length; j++) {
-                if (state.getMatrix()[i][j] != node.getState().getMatrix()[i][j]) {
-                    return false;
-                }
-            }
-
+    public Set<Node> getValidChildNodes() {
+        Set<Node> possibleChildNodes = new HashSet<>();
+        for (final Puzzle puzzle : getValidStates()) {
+            possibleChildNodes.add(new Node(this, puzzle));
         }
-        return true;
+        return possibleChildNodes;
     }
 
-    public Set<Node> expand() {
-        Set<Node> ret = new HashSet<>();
-        Set<Puzzle> aux = new HashSet<>();
-        aux.addAll(this.getState().getPossibleMoves());
-
-        for (Puzzle puzzle : aux) {
-            ret.add(new Node(this, puzzle));
-        }
-        return ret;
+    private Set<Puzzle> getValidStates() {
+        return this.getState().getPossibleMoves();
     }
 
     public boolean isGoal(){
@@ -73,7 +60,6 @@ public class Node {
     public void setParent(Node parent) {
         this.parent = parent;
     }
-
 
     @Override
     public String toString() {
