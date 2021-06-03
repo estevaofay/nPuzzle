@@ -46,7 +46,7 @@ public class AStarAlgorithm implements Algorithm {
             System.out.println("FRINGE: " + fringe.size());
             Node auxNode = fringe.remove(0);
 
-            if (auxNode.isGoal()) {
+            if (auxNode.getState().isGoal()) {
                 return auxNode;
             }
 

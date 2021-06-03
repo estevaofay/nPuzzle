@@ -13,6 +13,14 @@ class NodeTest {
     }
 
     @Test
+    void nodeWithNoStateShouldThrowException() {
+        assertThrows(Node.NodeHasNoState.class, () -> {
+            final Node node = new Node();
+            node.toString();
+        });
+    }
+
+    @Test
     void nodeShouldBeAbleToReferenceParent() {
         final Node parent = new Node();
         final Node child = new Node();

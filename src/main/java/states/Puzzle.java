@@ -1,19 +1,26 @@
 package states;
 
+import entity.Direction;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class Puzzle extends State {
 
-
-    public enum Direction {
-        UP, DOWN, LEFT, RIGHT
-    }
     int[][] matrix;
 
+    public Puzzle() {}
+
     public Puzzle(int puzzleDimension) {
-        matrix = new int[dimension][dimension];
         this.dimension = puzzleDimension;
+        matrix = new int[dimension][dimension];
+        createDefaultPuzzle();
+    }
+
+    @Override
+    public void setDimension(final int dimension) {
+        this.dimension = dimension;
+        matrix = new int[dimension][dimension];
         createDefaultPuzzle();
     }
 
@@ -139,7 +146,7 @@ public class Puzzle extends State {
     }
 
     @Override
-    public Set<State> getPossibleMoves() {
+    public Set<State> getValidMoves() {
         Set<State> ret = new HashSet<>();
 
         Puzzle upMove = this.move(Direction.UP);
@@ -167,7 +174,4 @@ public class Puzzle extends State {
         return matrix;
     }
 
-    public int getDimension() {
-        return dimension;
-    }
 }

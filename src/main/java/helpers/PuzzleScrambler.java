@@ -1,5 +1,6 @@
 package helpers;
 
+import entity.Direction;
 import states.Puzzle;
 
 public class PuzzleScrambler {
@@ -42,46 +43,46 @@ public class PuzzleScrambler {
 
     private static void tryToMovePuzzleLeft(final Puzzle puzzle) {
         if(puzzleCanMoveLeft(puzzle)) {
-            Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.LEFT);
+            Puzzle movedPuzzle = puzzle.move(Direction.LEFT);
             moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static void tryToMovePuzzleRight(final Puzzle puzzle) {
         if(puzzleCanMoveRight(puzzle)) {
-            Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.RIGHT);
+            Puzzle movedPuzzle = puzzle.move(Direction.RIGHT);
             moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static void tryToMovePuzzleDown(final Puzzle puzzle) {
         if(puzzleCanMoveDown(puzzle)){
-            Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.DOWN);
+            Puzzle movedPuzzle = puzzle.move(Direction.DOWN);
             moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static void tryToMovePuzzleUp(final Puzzle puzzle) {
         if(puzzleCanMoveUp(puzzle)) {
-            Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.UP);
+            Puzzle movedPuzzle = puzzle.move(Direction.UP);
             moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 
     private static boolean puzzleCanMoveLeft(Puzzle puzzle) {
-        return puzzle.move(Puzzle.Direction.LEFT) != null;
+        return puzzle.move(Direction.LEFT) != null;
     }
 
     private static boolean puzzleCanMoveRight(final Puzzle puzzle) {
-        return puzzle.move(Puzzle.Direction.RIGHT) != null;
+        return puzzle.move(Direction.RIGHT) != null;
     }
 
     private static boolean puzzleCanMoveDown(final Puzzle puzzle) {
-        return puzzle.move(Puzzle.Direction.DOWN) != null;
+        return puzzle.move(Direction.DOWN) != null;
     }
 
     private static boolean puzzleCanMoveUp(final Puzzle puzzle) {
-        return puzzle.move(Puzzle.Direction.UP) != null;
+        return puzzle.move(Direction.UP) != null;
     }
 
     private static int pickRandomDirection() {

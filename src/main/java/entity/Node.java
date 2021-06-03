@@ -11,30 +11,17 @@ public class Node {
     private Node parent;
     private int depth;
 
-    public Node(final Node parent, final State state){
-        this.state = state;
-        this.parent = parent;
-        this.depth = getDepth(parent);
-    }
+    public Node() {}
 
     public Node(final Node parent) {
         this.parent = parent;
+        this.depth = parent.getDepth() + 1;
     }
 
-    public Node() {
-
-    }
-
-    private int getDepth(final Node parent) {
-        if (isRootNode(parent)) {
-            return 0;
-        } else {
-            return parent.depth + 1;
-        }
-    }
-
-    private boolean isRootNode(final Node parent) {
-        return parent == null;
+    public Node(final Node parent, final State state){
+        this.state = state;
+        this.parent = parent;
+        this.depth = parent.getDepth() + 1;
     }
 
     public int getNodeQuality() {
@@ -43,18 +30,10 @@ public class Node {
 
     public Set<Node> getValidChildNodes() {
         final Set<Node> possibleChildNodes = new HashSet<>();
-        for (final State puzzle : getValidStates()) {
+        for (final State puzzle : state.getValidMoves()) {
             possibleChildNodes.add(new Node(this, puzzle));
         }
         return possibleChildNodes;
-    }
-
-    private Set<State> getValidStates() {
-        return this.getState().getPossibleMoves();
-    }
-
-    public boolean isGoal(){
-        return this.state.isGoal();
     }
 
     public State getState() {
@@ -73,6 +52,8 @@ public class Node {
 
     @Override
     public String toString() {
+        if (state == null)
+            throw new NodeHasNoState();
         return state.toString();
     }
 
@@ -84,4 +65,5 @@ public class Node {
 
     public class NodeHasNoState extends RuntimeException {
     }
+
 }
