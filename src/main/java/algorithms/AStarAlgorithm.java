@@ -2,7 +2,6 @@ package algorithms;
 
 import entity.Node;
 import helpers.NodeComparator;
-import helpers.PuzzleScrambler;
 import helpers.SolubilityChecker;
 import states.Puzzle;
 
@@ -39,12 +38,12 @@ public class AStarAlgorithm implements Algorithm {
 
         fringe.add(startNode);
 
-        while (nodeIsNotSolvable(startNode)) {
-            PuzzleScrambler.scramblePuzzle(startNode.getState());
+        if (!isNodeSolvable(startNode)) {
+            return startNode;
         }
 
         while (!fringe.isEmpty()) {
-            //System.out.println("FRINGE: " + fringe.size());
+            System.out.println("FRINGE: " + fringe.size());
             Node auxNode = fringe.remove(0);
 
             if (auxNode.isGoal()) {
@@ -55,7 +54,7 @@ public class AStarAlgorithm implements Algorithm {
             possibleMoves.addAll(auxNode.getValidChildNodes());
 
             closed.add(auxNode);
-            //System.out.println("CLOSED: " + closed.size());
+            System.out.println("CLOSED: " + closed.size());
 
             for (Node position : possibleMoves) {
 
@@ -75,7 +74,7 @@ public class AStarAlgorithm implements Algorithm {
         return null;
     }
 
-    private boolean nodeIsNotSolvable(final Node node) {
+    private boolean isNodeSolvable(final Node node) {
         return SolubilityChecker.isSolvable(node.getState());
     }
 }

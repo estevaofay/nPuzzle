@@ -6,7 +6,7 @@ public class PuzzleScrambler {
 
     public static final int FIFTY_THOUSAND_TIMES = 50000;
 
-    public static Puzzle scramblePuzzle(final Puzzle puzzle) {
+    public static Puzzle scramble(final Puzzle puzzle) {
         shufflePuzzleNTimes(puzzle, FIFTY_THOUSAND_TIMES);
         return puzzle;
     }
@@ -50,7 +50,7 @@ public class PuzzleScrambler {
     private static void tryToMovePuzzleRight(final Puzzle puzzle) {
         if(puzzleCanMoveRight(puzzle)) {
             Puzzle movedPuzzle = puzzle.move(Puzzle.Direction.RIGHT);
-            moveOriginalPuzzle(puzzle, puzzle);
+            moveOriginalPuzzle(puzzle, movedPuzzle);
         }
     }
 

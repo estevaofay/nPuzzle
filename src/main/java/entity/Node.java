@@ -9,7 +9,7 @@ public class Node {
 
     private final Puzzle state;
     private Node parent;
-    private Integer depth; //g()
+    private Integer depth;
 
     public Node(final Node parent, final Puzzle state){
         this.state = state;
@@ -18,14 +18,14 @@ public class Node {
     }
 
     private int getNodeDepth(final Node parent) {
-        if (parentIsRootNode(parent)) {
+        if (isRootNode(parent)) {
             return 0;
         } else {
             return parent.depth + 1;
         }
     }
 
-    private boolean parentIsRootNode(final Node parent) {
+    private boolean isRootNode(final Node parent) {
         return parent == null;
     }
 
@@ -34,7 +34,7 @@ public class Node {
     }
 
     public Set<Node> getValidChildNodes() {
-        Set<Node> possibleChildNodes = new HashSet<>();
+        final Set<Node> possibleChildNodes = new HashSet<>();
         for (final Puzzle puzzle : getValidStates()) {
             possibleChildNodes.add(new Node(this, puzzle));
         }
@@ -57,7 +57,7 @@ public class Node {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    public void setParent(final Node parent) {
         this.parent = parent;
     }
 
