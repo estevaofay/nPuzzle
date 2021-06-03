@@ -1,23 +1,31 @@
 package entity;
 
-import states.Puzzle;
+import states.State;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Node {
 
-    private final Puzzle state;
+    private State state;
     private Node parent;
-    private Integer depth;
+    private int depth;
 
-    public Node(final Node parent, final Puzzle state){
+    public Node(final Node parent, final State state){
         this.state = state;
         this.parent = parent;
-        this.depth = getNodeDepth(parent);
+        this.depth = getDepth(parent);
     }
 
-    private int getNodeDepth(final Node parent) {
+    public Node(final Node parent) {
+        this.parent = parent;
+    }
+
+    public Node() {
+
+    }
+
+    private int getDepth(final Node parent) {
         if (isRootNode(parent)) {
             return 0;
         } else {
@@ -35,13 +43,13 @@ public class Node {
 
     public Set<Node> getValidChildNodes() {
         final Set<Node> possibleChildNodes = new HashSet<>();
-        for (final Puzzle puzzle : getValidStates()) {
+        for (final State puzzle : getValidStates()) {
             possibleChildNodes.add(new Node(this, puzzle));
         }
         return possibleChildNodes;
     }
 
-    private Set<Puzzle> getValidStates() {
+    private Set<State> getValidStates() {
         return this.getState().getPossibleMoves();
     }
 
@@ -49,7 +57,9 @@ public class Node {
         return this.state.isGoal();
     }
 
-    public Puzzle getState() {
+    public State getState() {
+        if (state == null)
+            throw new NodeHasNoState();
         return state;
     }
 
@@ -64,5 +74,14 @@ public class Node {
     @Override
     public String toString() {
         return state.toString();
+    }
+
+    public int getDepth() {
+        if (parent != null)
+            return parent.getDepth() + 1;
+        return 0;
+    }
+
+    public class NodeHasNoState extends RuntimeException {
     }
 }
