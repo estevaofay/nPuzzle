@@ -1,13 +1,16 @@
 package states;
 
 import entity.Direction;
+import helpers.PuzzleMover;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Puzzle extends State {
 
     int[][] matrix;
+    Set<State> validPuzzleMoves;
 
     public Puzzle() {}
 
@@ -47,59 +50,18 @@ public class Puzzle extends State {
 
     public Puzzle move(final Direction d) {
         Puzzle movedPuzzle = new Puzzle(this);
-
         switch (d) {
             case UP:
-                for (int i = 0; i < movedPuzzle.dimension; i++) {
-                    for (int j = 0; j < movedPuzzle.dimension; j++) {
-                        if (movedPuzzle.matrix[i][j] == Math.pow(dimension, 2)) {
-                            if (i != 0) {
-                                movedPuzzle.matrix[i][j] = matrix[i - 1][j];
-                                movedPuzzle.matrix[i - 1][j] = (int) Math.pow(dimension, 2);
-                                return movedPuzzle;
-                            }
-                        }
-                    }
-                }
+                PuzzleMover.movePuzzleUp(movedPuzzle);
                 return null;
             case DOWN:
-                for (int i = 0; i < dimension; i++) {
-                    for (int j = 0; j < dimension; j++) {
-                        if (movedPuzzle.matrix[i][j] == Math.pow(dimension, 2)) {
-                            if (i != dimension - 1) {
-                                movedPuzzle.matrix[i][j] = matrix[i + 1][j];
-                                movedPuzzle.matrix[i + 1][j] = (int) Math.pow(dimension, 2);
-                                return movedPuzzle;
-                            }
-                        }
-                    }
-                }
+                PuzzleMover.movePuzzleDown(movedPuzzle);
                 return null;
             case LEFT:
-                for (int i = 0; i < dimension; i++) {
-                    for (int j = 0; j < dimension; j++) {
-                        if (movedPuzzle.matrix[i][j] == Math.pow(dimension, 2)) {
-                            if (j != 0) {
-                                movedPuzzle.matrix[i][j] = matrix[i][j - 1];
-                                movedPuzzle.matrix[i][j - 1] = (int) Math.pow(dimension, 2);
-                                return movedPuzzle;
-                            }
-                        }
-                    }
-                }
+                PuzzleMover.movePuzzleLeft(movedPuzzle);
                 return null;
             case RIGHT:
-                for (int i = 0; i < dimension; i++) {
-                    for (int j = 0; j < dimension; j++) {
-                        if (movedPuzzle.matrix[i][j] == Math.pow(dimension, 2)) {
-                            if (j != dimension - 1) {
-                                movedPuzzle.matrix[i][j] = matrix[i][j + 1];
-                                movedPuzzle.matrix[i][j + 1] = (int) Math.pow(dimension, 2);
-                                return movedPuzzle;
-                            }
-                        }
-                    }
-                }
+                PuzzleMover.movePuzzleRight(movedPuzzle);
                 return null;
         }
         return null;
@@ -147,31 +109,29 @@ public class Puzzle extends State {
 
     @Override
     public Set<State> getValidMoves() {
-        Set<State> ret = new HashSet<>();
+        Set<Puzzle> validPuzzleMoves1 = new HashSet<>();
+        validPuzzleMoves1.add(PuzzleMover.movePuzzleUp(this));
+        validPuzzleMoves1.add(PuzzleMover.movePuzzleDown(this));
+        validPuzzleMoves1.add(PuzzleMover.movePuzzleLeft(this));
+        validPuzzleMoves1.add(PuzzleMover.movePuzzleRight(this));
 
-        Puzzle upMove = this.move(Direction.UP);
-        Puzzle downMove = this.move(Direction.DOWN);
-        Puzzle leftMove = this.move(Direction.LEFT);
-        Puzzle rightMove = this.move(Direction.RIGHT);
-
-        if (upMove != null) {
-            ret.add(upMove);
-        }
-        if (downMove != null) {
-            ret.add(downMove);
-        }
-        if (leftMove != null) {
-            ret.add(leftMove);
-        }
-        if (rightMove != null) {
-            ret.add(rightMove);
-        }
-
-        return ret;
+        return null;
     }
 
     public int[][] getMatrix() {
         return matrix;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Puzzle puzzle = (Puzzle) o;
+        return Arrays.equals(matrix, puzzle.matrix);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(matrix);
+    }
 }

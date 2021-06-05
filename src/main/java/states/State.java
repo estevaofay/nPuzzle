@@ -23,4 +23,6 @@ public abstract class State {
             throw new StateHasNoDimensionsSet();
         return dimension;
     }
+
+
 }

@@ -2,7 +2,11 @@ package states;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static utils.TestUtils.assertMatricesAreEqual;
 
 class PuzzleTest {
 
@@ -59,12 +63,11 @@ class PuzzleTest {
 
     }
 
-    private void assertMatricesAreEqual(final int[][] expectedMatrix, final int[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
-                assertEquals(expectedMatrix[i][j], matrix[i][j]);
-            }
-        }
+    @Test
+    void test() {
+        final Puzzle puzzle = new Puzzle(3);
+        Set<State> validMoves = puzzle.getValidMoves();
+        assertEquals(4, validMoves.size());
     }
 
     private int[][] createUnshuffledPuzzle(final int dimension) {
